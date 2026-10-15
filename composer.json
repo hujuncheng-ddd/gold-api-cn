@@ -1,0 +1,44 @@
+{
+    "name": "gold-api/sdk-php",
+    "description": "GoldAPI (gold-api.cn) 贵金属行情 PHP SDK —— 黄金/白银/铂金/钯金等 70+ 品种实时行情，一次请求最多批量 50 个品种",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "gold", "silver", "platinum", "palladium",
+        "gold-price", "precious-metals", "quotes", "api", "sdk",
+        "贵金属", "黄金", "行情", "金价"
+    ],
+    "homepage": "https://www.gold-api.cn",
+    "support": {
+        "docs": "https://www.gold-api.cn/docs.php",
+        "issues": "https://github.com/hujuncheng-ddd/gold-api-cn/issues",
+        "source": "https://github.com/hujuncheng-ddd/gold-api-cn"
+    },
+    "require": {
+        "php": ">=7.2",
+        "ext-json": "*",
+        "ext-curl": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5 || ^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "GoldApi\\Sdk\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GoldApi\\Sdk\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "GoldAPI",
+            "homepage": "https://www.gold-api.cn"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    }
+}
