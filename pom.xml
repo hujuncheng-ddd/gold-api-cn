@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 根聚合 POM：仅供 JitPack / 本地构建 Java SDK 使用，其他语言 SDK 不受影响 -->
+    <groupId>com.goldapi</groupId>
+    <artifactId>gold-api-cn</artifactId>
+    <version>1.3.0</version>
+    <packaging>pom</packaging>
+
+    <name>GoldAPI SDK (multi-language)</name>
+    <description>GoldAPI (gold-api.cn) 贵金属实时行情官方 SDK —— PHP / Python / Node.js / Go / Java</description>
+    <url>https://www.gold-api.cn</url>
+
+    <modules>
+        <module>java</module>
+    </modules>
+</project>

@@ -7,6 +7,7 @@
 ![Python](https://img.shields.io/badge/Python-%3E%3D3.7-3776AB?logo=python&logoColor=white)
 ![Node](https://img.shields.io/badge/Node.js-%3E%3D18-339933?logo=nodedotjs&logoColor=white)
 ![Go](https://img.shields.io/badge/Go-%3E%3D1.21-00ADD8?logo=go&logoColor=white)
+![Java](https://img.shields.io/badge/Java-%3E%3D8-007396?logo=openjdk&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![No Dependencies](https://img.shields.io/badge/dependencies-zero-success)
 
@@ -18,6 +19,7 @@
 | **Python** | `pip install gold-api` | [`python/`](python/) | Python ≥ 3.7，零依赖 |
 | **Node.js** | `npm install gold-api` | [`node/`](node/) | Node ≥ 18，零依赖（内置 fetch） |
 | **Go** | `go get github.com/hujuncheng-ddd/gold-api-cn/go` | [`go/`](go/) | Go ≥ 1.21，零依赖（标准库） |
+| **Java** | JitPack `com.github.hujuncheng-ddd:gold-api-sdk` | [`java/`](java/) | Java ≥ 8，零依赖（含内置 JSON 解析） |
 
 ## ✨ 为什么选 GoldAPI
 
@@ -28,7 +30,7 @@
 | 🎫 **密钥分发** | 一个账户多把 AppKey，各自限定品种范围，随时停用/重置 |
 | 📊 **精确计量** | 调用明细随时可查，响应头实时返回配额余量 |
 | 🧾 **字段稳定** | 返回结构长期稳定，接入方无需改动解析逻辑 |
-| 🚀 **即插即用** | 四个 SDK 全部**零第三方依赖**，开箱即用 |
+| 🚀 **即插即用** | 五个 SDK 全部**零第三方依赖**，开箱即用 |
 
 ## 🚀 快速开始（3 步）
 
@@ -41,6 +43,7 @@ composer require gold-api/sdk-php   # PHP
 pip install gold-api            # Python
 npm install gold-api            # Node.js
 go get github.com/hujuncheng-ddd/gold-api-cn/go   # Go
+# Java：JitPack 依赖 com.github.hujuncheng-ddd:gold-api-sdk（见下方 Java 标签页）
 ```
 
 **3. 一行代码拿行情**
@@ -106,15 +109,40 @@ for _, q := range quotes {
 ```
 </details>
 
-四个 SDK 的 API 完全对齐：
+<details>
+<summary><b>Java</b></summary>
 
-| 能力 | PHP | Python | Node.js | Go |
-|---|---|---|---|---|
-| 批量实时行情（≤50 品种） | `realtime()` | `realtime()` | `realtime()` | `Realtime()` |
-| 单品种快捷查询 | `realtimeOne()` | `realtime_one()` | `realtimeOne()` | `RealtimeOne()` |
-| 品种列表（免认证） | `varieties()` | `varieties()` | `varieties()` | `Varieties()` |
-| 配额/限流感知 | `getLastRateLimit()` | `last_rate_limit()` | `getLastRateLimit()` | `LastRateLimit()` |
-| 异常（msgId/requestId/httpCode + 限流判断） | `GoldApiException` | `GoldApiException` | `GoldApiException` | `*goldapi.Error` |
+```xml
+<!-- pom.xml: 先添加 JitPack 仓库，再添加依赖 -->
+<repository><id>jitpack.io</id><url>https://jitpack.io</url></repository>
+
+<dependency>
+    <groupId>com.github.hujuncheng-ddd</groupId>
+    <artifactId>gold-api-sdk</artifactId>
+    <version>v1.3.0</version>
+</dependency>
+```
+
+```java
+GoldApiClient client = new GoldApiClient("gk_your_appkey");
+
+Map<String, Quote> quotes = client.realtime("1051", "1061", "hf_GC"); // 黄金T+D + 黄金现货 + 纽约金
+
+for (Quote q : quotes.values()) {
+    System.out.println(q.getVarietyName() + " 最新价 " + q.getLastPrice() + "（" + q.getChangeMargin() + "）");
+}
+```
+</details>
+
+五个 SDK 的 API 完全对齐：
+
+| 能力 | PHP | Python | Node.js | Go | Java |
+|---|---|---|---|---|---|
+| 批量实时行情（≤50 品种） | `realtime()` | `realtime()` | `realtime()` | `Realtime()` | `realtime()` |
+| 单品种快捷查询 | `realtimeOne()` | `realtime_one()` | `realtimeOne()` | `RealtimeOne()` | `realtimeOne()` |
+| 品种列表（免认证） | `varieties()` | `varieties()` | `varieties()` | `Varieties()` | `varieties()` |
+| 配额/限流感知 | `getLastRateLimit()` | `last_rate_limit()` | `getLastRateLimit()` | `LastRateLimit()` | `getLastRateLimit()` |
+| 异常（msgId/requestId/httpCode + 限流判断） | `GoldApiException` | `GoldApiException` | `GoldApiException` | `*goldapi.Error` | `GoldApiException` |
 
 ## 📊 返回字段（每个品种 11 个字段）
 
@@ -166,7 +194,7 @@ for _, q := range quotes {
 ## ⚠️ 安全提示
 
 - AppKey 等同于账号密码，**切勿写入前端 JS 或提交到公开仓库**
-- 三个 SDK 均默认通过 `X-API-KEY` 请求头传密钥，避免 appkey 泄漏到 URL / 访问日志
+- 五个 SDK 均默认通过 `X-API-KEY` 请求头传密钥，避免 appkey 泄漏到 URL / 访问日志
 - 密钥泄露后请在管理后台「密钥管理」中立即重置，旧密钥即时失效
 - 建议通过环境变量注入（如 `GOLD_API_KEY`）
 
@@ -181,6 +209,7 @@ for _, q := range quotes {
 | 📦 PHP SDK | [仓库根目录](src/GoldApiClient.php) · Packagist `gold-api/sdk-php` |
 | 🐍 Python SDK | [`python/`](python/) · PyPI `gold-api` |
 | 🟢 Node SDK | [`node/`](node/) · npm `gold-api` |
+| ☕ Java SDK | [`java/`](java/) · JitPack `com.github.hujuncheng-ddd:gold-api-sdk` |
 | 💬 问题反馈 | [Issues](https://github.com/hujuncheng-ddd/gold-api-cn/issues) |
 
 ## License
