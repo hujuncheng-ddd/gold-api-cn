@@ -18,8 +18,8 @@ appkey = os.environ.get("GOLD_API_KEY") or "gk_你的appkey"
 client = GoldApiClient(appkey)
 
 try:
-    # 一次请求拿 4 个品种：黄金现货 / 白银现货 / 纽约金 / 沪金主力
-    quotes = client.realtime(["1061", "1062", "hf_GC", "nf_AU0"])
+    # 一次请求拿 4 个品种：黄金T+D / 黄金现货 / 白银现货 / 纽约金
+    quotes = client.realtime(["1051", "1061", "1062", "hf_GC"])
 
     if not quotes:
         raise SystemExit("未查询到行情，请检查 goldId 是否正确")

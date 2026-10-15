@@ -18,7 +18,7 @@ from gold_api import GoldApiClient, GoldApiException
 client = GoldApiClient("gk_your_appkey")   # https://www.gold-api.cn/client/register.php 免费注册获取
 
 try:
-    quotes = client.realtime(["1061", "hf_GC", "nf_AU0"])  # 黄金现货 + 纽约金 + 沪金主力
+    quotes = client.realtime(["1051", "1061", "hf_GC"])  # 黄金T+D + 黄金现货 + 纽约金
     for q in quotes.values():
         print(q["varietyName"], q["lastPrice"], q["changeMargin"])
 

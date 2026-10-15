@@ -18,7 +18,7 @@ import { GoldApiClient, GoldApiException } from 'gold-api';
 const client = new GoldApiClient('gk_your_appkey');  // https://www.gold-api.cn/client/register.php 免费注册获取
 
 try {
-  const quotes = await client.realtime(['1061', 'hf_GC', 'nf_AU0']); // 黄金现货 + 纽约金 + 沪金主力
+  const quotes = await client.realtime(['1051', '1061', 'hf_GC']); // 黄金T+D + 黄金现货 + 纽约金
   for (const q of Object.values(quotes)) {
     console.log(q.varietyName, q.lastPrice, q.changeMargin);
   }

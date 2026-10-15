@@ -15,8 +15,8 @@ const appkey = process.env.GOLD_API_KEY || 'gk_你的appkey';
 const client = new GoldApiClient(appkey);
 
 try {
-  // 一次请求拿 4 个品种：黄金现货 / 白银现货 / 纽约金 / 沪金主力
-  const quotes = await client.realtime(['1061', '1062', 'hf_GC', 'nf_AU0']);
+  // 一次请求拿 4 个品种：黄金T+D / 黄金现货 / 白银现货 / 纽约金
+  const quotes = await client.realtime(['1051', '1061', '1062', 'hf_GC']);
 
   const ids = Object.keys(quotes);
   if (ids.length === 0) {

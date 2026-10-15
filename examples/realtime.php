@@ -20,9 +20,9 @@ $appkey = getenv('GOLD_API_KEY') ?: 'gk_你的appkey';
 $client = new GoldApiClient($appkey);
 
 try {
-    // 一次请求拿 4 个品种：黄金现货 / 白银现货 / 纽约金 / 沪金主力
+    // 一次请求拿 4 个品种：黄金T+D / 黄金现货 / 白银现货 / 纽约金
     // 全部 goldId 见 https://www.gold-api.cn/varieties.php
-    $quotes = $client->realtime(['1061', '1062', 'hf_GC', 'nf_AU0']);
+    $quotes = $client->realtime(['1051', '1061', '1062', 'hf_GC']);
 
     if (!$quotes) {
         exit("未查询到行情，请检查 goldId 是否正确\n");

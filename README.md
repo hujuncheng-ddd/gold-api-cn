@@ -6,6 +6,7 @@
 ![PHP](https://img.shields.io/badge/PHP-%3E%3D7.2-8892BF?logo=php&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-%3E%3D3.7-3776AB?logo=python&logoColor=white)
 ![Node](https://img.shields.io/badge/Node.js-%3E%3D18-339933?logo=nodedotjs&logoColor=white)
+![Go](https://img.shields.io/badge/Go-%3E%3D1.21-00ADD8?logo=go&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![No Dependencies](https://img.shields.io/badge/dependencies-zero-success)
 
@@ -16,6 +17,7 @@
 | **PHP** | `composer require gold-api/sdk-php` | 根目录 | PHP ≥ 7.2，ext-curl |
 | **Python** | `pip install gold-api` | [`python/`](python/) | Python ≥ 3.7，零依赖 |
 | **Node.js** | `npm install gold-api` | [`node/`](node/) | Node ≥ 18，零依赖（内置 fetch） |
+| **Go** | `go get github.com/hujuncheng-ddd/gold-api-cn/go` | [`go/`](go/) | Go ≥ 1.21，零依赖（标准库） |
 
 ## ✨ 为什么选 GoldAPI
 
@@ -26,7 +28,7 @@
 | 🎫 **密钥分发** | 一个账户多把 AppKey，各自限定品种范围，随时停用/重置 |
 | 📊 **精确计量** | 调用明细随时可查，响应头实时返回配额余量 |
 | 🧾 **字段稳定** | 返回结构长期稳定，接入方无需改动解析逻辑 |
-| 🚀 **即插即用** | 三个 SDK 全部**零第三方依赖**，开箱即用 |
+| 🚀 **即插即用** | 四个 SDK 全部**零第三方依赖**，开箱即用 |
 
 ## 🚀 快速开始（3 步）
 
@@ -38,6 +40,7 @@
 composer require gold-api/sdk-php   # PHP
 pip install gold-api            # Python
 npm install gold-api            # Node.js
+go get github.com/hujuncheng-ddd/gold-api-cn/go   # Go
 ```
 
 **3. 一行代码拿行情**
@@ -50,7 +53,7 @@ use GoldApi\Sdk\GoldApiClient;
 
 $client = new GoldApiClient('gk_your_appkey');
 
-$quotes = $client->realtime(['1061', 'hf_GC', 'nf_AU0']);  // 黄金现货 + 纽约金 + 沪金主力
+$quotes = $client->realtime(['1051', '1061', 'hf_GC']);  // 黄金T+D + 黄金现货 + 纽约金
 
 foreach ($quotes as $goldId => $q) {
     echo $q['varietyName'], ' 最新价 ', $q['lastPrice'], '（', $q['changeMargin'], '）', PHP_EOL;
@@ -66,7 +69,7 @@ from gold_api import GoldApiClient
 
 client = GoldApiClient("gk_your_appkey")
 
-quotes = client.realtime(["1061", "hf_GC", "nf_AU0"])  # 黄金现货 + 纽约金 + 沪金主力
+quotes = client.realtime(["1051", "1061", "hf_GC"])  # 黄金T+D + 黄金现货 + 纽约金
 
 for q in quotes.values():
     print(q["varietyName"], "最新价", q["lastPrice"], f'（{q["changeMargin"]}）')
@@ -81,7 +84,7 @@ import { GoldApiClient } from 'gold-api';
 
 const client = new GoldApiClient('gk_your_appkey');
 
-const quotes = await client.realtime(['1061', 'hf_GC', 'nf_AU0']); // 黄金现货 + 纽约金 + 沪金主力
+const quotes = await client.realtime(['1051', '1061', 'hf_GC']); // 黄金T+D + 黄金现货 + 纽约金
 
 for (const q of Object.values(quotes)) {
   console.log(`${q.varietyName} 最新价 ${q.lastPrice}（${q.changeMargin}）`);
@@ -89,15 +92,29 @@ for (const q of Object.values(quotes)) {
 ```
 </details>
 
-三个 SDK 的 API 完全对齐：
+<details>
+<summary><b>Go</b></summary>
 
-| 能力 | PHP | Python | Node.js |
-|---|---|---|---|
-| 批量实时行情（≤50 品种） | `realtime()` | `realtime()` | `realtime()` |
-| 单品种快捷查询 | `realtimeOne()` | `realtime_one()` | `realtimeOne()` |
-| 品种列表（免认证） | `varieties()` | `varieties()` | `varieties()` |
-| 配额/限流感知 | `getLastRateLimit()` | `last_rate_limit()` | `getLastRateLimit()` |
-| 异常（msgId/requestId/httpCode + 限流判断） | `GoldApiException` | `GoldApiException` | `GoldApiException` |
+```go
+client := goldapi.NewClient("gk_your_appkey")
+
+quotes, _ := client.Realtime("1051", "1061", "hf_GC") // 黄金T+D + 黄金现货 + 纽约金
+
+for _, q := range quotes {
+    fmt.Println(q.VarietyName, "最新价", q.LastPrice, "（"+q.ChangeMargin+"）")
+}
+```
+</details>
+
+四个 SDK 的 API 完全对齐：
+
+| 能力 | PHP | Python | Node.js | Go |
+|---|---|---|---|---|
+| 批量实时行情（≤50 品种） | `realtime()` | `realtime()` | `realtime()` | `Realtime()` |
+| 单品种快捷查询 | `realtimeOne()` | `realtime_one()` | `realtimeOne()` | `RealtimeOne()` |
+| 品种列表（免认证） | `varieties()` | `varieties()` | `varieties()` | `Varieties()` |
+| 配额/限流感知 | `getLastRateLimit()` | `last_rate_limit()` | `getLastRateLimit()` | `LastRateLimit()` |
+| 异常（msgId/requestId/httpCode + 限流判断） | `GoldApiException` | `GoldApiException` | `GoldApiException` | `*goldapi.Error` |
 
 ## 📊 返回字段（每个品种 11 个字段）
 
