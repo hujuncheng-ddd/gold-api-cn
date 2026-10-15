@@ -1,0 +1,37 @@
+{
+  "name": "gold-api",
+  "version": "1.0.0",
+  "description": "GoldAPI (gold-api.cn) 贵金属行情 Node.js SDK —— 黄金/白银/铂金/钯金等 70+ 品种实时行情，一次请求批量 50 个品种",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "examples",
+    "README.md"
+  ],
+  "scripts": {
+    "example": "node examples/realtime.js",
+    "example:varieties": "node examples/varieties.js"
+  },
+  "keywords": [
+    "gold", "silver", "platinum", "palladium",
+    "gold-price", "precious-metals", "quotes", "api", "sdk",
+    "贵金属", "黄金", "行情", "金价"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "homepage": "https://www.gold-api.cn",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hujuncheng-ddd/gold-api-cn.git",
+    "directory": "node"
+  },
+  "bugs": {
+    "url": "https://github.com/hujuncheng-ddd/gold-api-cn/issues"
+  }
+}

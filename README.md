@@ -1,12 +1,21 @@
-# GoldAPI PHP SDK
+# GoldAPI Official SDK
 
-> 🥇 贵金属实时行情 PHP SDK —— 一次请求，批量拿回黄金 / 白银 / 铂金 / 钯金等 **70+ 品种**行情
+> 🥇 贵金属实时行情官方 SDK —— 一次请求，批量拿回黄金 / 白银 / 铂金 / 钯金等 **70+ 品种**行情
 > 数据服务由 [gold-api.cn](https://www.gold-api.cn) 提供 · [免费注册即得 AppKey](https://www.gold-api.cn/client/register.php)
 
 ![PHP](https://img.shields.io/badge/PHP-%3E%3D7.2-8892BF?logo=php&logoColor=white)
+![Python](https://img.shields.io/badge/Python-%3E%3D3.7-3776AB?logo=python&logoColor=white)
+![Node](https://img.shields.io/badge/Node.js-%3E%3D18-339933?logo=nodedotjs&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![API](https://img.shields.io/badge/API-v1-blue)
 ![No Dependencies](https://img.shields.io/badge/dependencies-zero-success)
+
+## 📦 选择你的语言
+
+| 语言 | 安装 | 目录 | 依赖要求 |
+|---|---|---|---|
+| **PHP** | `composer require gold-api/sdk` | 根目录 | PHP ≥ 7.2，ext-curl |
+| **Python** | `pip install gold-api` | [`python/`](python/) | Python ≥ 3.7，零依赖 |
+| **Node.js** | `npm install gold-api` | [`node/`](node/) | Node ≥ 18，零依赖（内置 fetch） |
 
 ## ✨ 为什么选 GoldAPI
 
@@ -17,19 +26,24 @@
 | 🎫 **密钥分发** | 一个账户多把 AppKey，各自限定品种范围，随时停用/重置 |
 | 📊 **精确计量** | 调用明细随时可查，响应头实时返回配额余量 |
 | 🧾 **字段稳定** | 返回结构长期稳定，接入方无需改动解析逻辑 |
-| 🚀 **即插即用** | 纯 cURL 实现，**零第三方依赖**，PHP 7.2+ 开箱即用 |
+| 🚀 **即插即用** | 三个 SDK 全部**零第三方依赖**，开箱即用 |
 
 ## 🚀 快速开始（3 步）
 
 **1. 免费注册获取 AppKey** 👉 [https://www.gold-api.cn/client/register.php](https://www.gold-api.cn/client/register.php)
 
-**2. 安装**
+**2. 安装**（任选其一）
 
 ```bash
-composer require gold-api/sdk
+composer require gold-api/sdk   # PHP
+pip install gold-api            # Python
+npm install gold-api            # Node.js
 ```
 
 **3. 一行代码拿行情**
+
+<details open>
+<summary><b>PHP</b></summary>
 
 ```php
 use GoldApi\Sdk\GoldApiClient;
@@ -42,63 +56,48 @@ foreach ($quotes as $goldId => $q) {
     echo $q['varietyName'], ' 最新价 ', $q['lastPrice'], '（', $q['changeMargin'], '）', PHP_EOL;
 }
 ```
+</details>
 
-输出：
+<details>
+<summary><b>Python</b></summary>
 
+```python
+from gold_api import GoldApiClient
+
+client = GoldApiClient("gk_your_appkey")
+
+quotes = client.realtime(["1061", "hf_GC", "nf_AU0"])  # 黄金现货 + 纽约金 + 沪金主力
+
+for q in quotes.values():
+    print(q["varietyName"], "最新价", q["lastPrice"], f'（{q["changeMargin"]}）')
 ```
-黄金现货 最新价 897.6（-3.33%）
-纽约金 最新价 2651.2（+0.42%）
-沪金主力 最新价 618.35（-2.91%）
-```
+</details>
 
-## 📖 更多用法
+<details>
+<summary><b>Node.js</b></summary>
 
-### 单品种快捷查询
+```js
+import { GoldApiClient } from 'gold-api';
 
-```php
-$quote = $client->realtimeOne('1061');          // 黄金现货
-// 品种不存在 / 已下架时返回 null，注意判空
+const client = new GoldApiClient('gk_your_appkey');
 
-$price = $quote['lastPrice'];                   // 最新价
-$change = $quote['changeMargin'];               // 涨跌幅 "-3.33%"
-```
+const quotes = await client.realtime(['1061', 'hf_GC', 'nf_AU0']); // 黄金现货 + 纽约金 + 沪金主力
 
-### 品种列表（无需 AppKey，可直接给前端下拉框用）
-
-```php
-$list = $client->varieties();                   // 全部品种
-$shList = $client->varieties('上金所');          // 按市场筛选
-```
-
-### 配额 / 限流感知
-
-```php
-$quotes = $client->realtime('1061');
-
-$client->getLastRateLimit();
-// ['billing' => 'member', 'daily_limit' => 1000, 'daily_remaining' => 973, 'qps_limit' => 5]
-
-$client->getLastRequestId();                    // 排查问题时提供给平台方
-```
-
-### 完整错误处理
-
-```php
-use GoldApi\Sdk\Exception\GoldApiException;
-
-try {
-    $quotes = $client->realtime(['1061', 'hf_GC']);
-} catch (GoldApiException $e) {
-    echo '错误码: ', $e->getMsgId(), PHP_EOL;       // 如 DAILY_LIMIT_EXCEEDED
-    echo '信息: ', $e->getMessage(), PHP_EOL;
-    echo 'requestId: ', $e->getRequestId(), PHP_EOL; // 报障时提供
-
-    if ($e->isRateLimit()) {
-        // 配额/频率类错误：退避重试或提醒升级配额
-        sleep(1);
-    }
+for (const q of Object.values(quotes)) {
+  console.log(`${q.varietyName} 最新价 ${q.lastPrice}（${q.changeMargin}）`);
 }
 ```
+</details>
+
+三个 SDK 的 API 完全对齐：
+
+| 能力 | PHP | Python | Node.js |
+|---|---|---|---|
+| 批量实时行情（≤50 品种） | `realtime()` | `realtime()` | `realtime()` |
+| 单品种快捷查询 | `realtimeOne()` | `realtime_one()` | `realtimeOne()` |
+| 品种列表（免认证） | `varieties()` | `varieties()` | `varieties()` |
+| 配额/限流感知 | `getLastRateLimit()` | `last_rate_limit()` | `getLastRateLimit()` |
+| 异常（msgId/requestId/httpCode + 限流判断） | `GoldApiException` | `GoldApiException` | `GoldApiException` |
 
 ## 🪙 常用 goldId 速查
 
@@ -120,9 +119,9 @@ try {
 ## ⚠️ 安全提示
 
 - AppKey 等同于账号密码，**切勿写入前端 JS 或提交到公开仓库**
-- 本 SDK 默认通过 `X-API-KEY` 请求头传密钥，避免 appkey 泄漏到 URL / 访问日志
+- 三个 SDK 均默认通过 `X-API-KEY` 请求头传密钥，避免 appkey 泄漏到 URL / 访问日志
 - 密钥泄露后请在管理后台「密钥管理」中立即重置，旧密钥即时失效
-- 建议通过环境变量注入：`new GoldApiClient(getenv('GOLD_API_KEY'))`
+- 建议通过环境变量注入（如 `GOLD_API_KEY`）
 
 ## 🔗 相关链接
 
@@ -132,6 +131,9 @@ try {
 | 📝 接口文档 | https://www.gold-api.cn/docs.php |
 | 🪙 品种对照表 | https://www.gold-api.cn/varieties.php |
 | 🎫 免费注册 | https://www.gold-api.cn/client/register.php |
+| 📦 PHP SDK | [仓库根目录](src/GoldApiClient.php) · Packagist `gold-api/sdk` |
+| 🐍 Python SDK | [`python/`](python/) · PyPI `gold-api` |
+| 🟢 Node SDK | [`node/`](node/) · npm `gold-api` |
 | 💬 问题反馈 | [Issues](https://github.com/hujuncheng-ddd/gold-api-cn/issues) |
 
 ## License
