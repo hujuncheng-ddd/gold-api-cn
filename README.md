@@ -19,7 +19,7 @@
 | **Python** | `pip install gold-api` | [`python/`](python/) | Python ≥ 3.7，零依赖 |
 | **Node.js** | `npm install gold-api` | [`node/`](node/) | Node ≥ 18，零依赖（内置 fetch） |
 | **Go** | `go get github.com/hujuncheng-ddd/gold-api-cn/go` | [`go/`](go/) | Go ≥ 1.21，零依赖（标准库） |
-| **Java** | JitPack `com.github.hujuncheng-ddd:gold-api-sdk` | [`java/`](java/) | Java ≥ 8，零依赖（含内置 JSON 解析） |
+| **Java** | JitPack `com.github.hujuncheng-ddd.gold-api-cn:gold-api-sdk` | [`java/`](java/) | Java ≥ 8，零依赖（含内置 JSON 解析） |
 
 ## ✨ 为什么选 GoldAPI
 
@@ -43,7 +43,7 @@ composer require gold-api/sdk-php   # PHP
 pip install gold-api            # Python
 npm install gold-api            # Node.js
 go get github.com/hujuncheng-ddd/gold-api-cn/go   # Go
-# Java：JitPack 依赖 com.github.hujuncheng-ddd:gold-api-sdk（见下方 Java 标签页）
+# Java：JitPack 依赖 com.github.hujuncheng-ddd.gold-api-cn:gold-api-sdk（见下方 Java 标签页）
 ```
 
 **3. 一行代码拿行情**
@@ -117,9 +117,9 @@ for _, q := range quotes {
 <repository><id>jitpack.io</id><url>https://jitpack.io</url></repository>
 
 <dependency>
-    <groupId>com.github.hujuncheng-ddd</groupId>
+    <groupId>com.github.hujuncheng-ddd.gold-api-cn</groupId>
     <artifactId>gold-api-sdk</artifactId>
-    <version>v1.3.0</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
@@ -209,7 +209,7 @@ for (Quote q : quotes.values()) {
 | 📦 PHP SDK | [仓库根目录](src/GoldApiClient.php) · Packagist `gold-api/sdk-php` |
 | 🐍 Python SDK | [`python/`](python/) · PyPI `gold-api` |
 | 🟢 Node SDK | [`node/`](node/) · npm `gold-api` |
-| ☕ Java SDK | [`java/`](java/) · JitPack `com.github.hujuncheng-ddd:gold-api-sdk` |
+| ☕ Java SDK | [`java/`](java/) · JitPack `com.github.hujuncheng-ddd.gold-api-cn:gold-api-sdk` |
 | 💬 问题反馈 | [Issues](https://github.com/hujuncheng-ddd/gold-api-cn/issues) |
 
 ## License

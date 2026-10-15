@@ -20,9 +20,9 @@
 
 ```xml
 <dependency>
-    <groupId>com.github.hujuncheng-ddd</groupId>
+    <groupId>com.github.hujuncheng-ddd.gold-api-cn</groupId>
     <artifactId>gold-api-sdk</artifactId>
-    <version>v1.3.0</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
@@ -30,7 +30,7 @@ Gradle (Kotlin DSL)：
 
 ```kotlin
 repositories { maven("https://jitpack.io") }
-dependencies { implementation("com.github.hujuncheng-ddd:gold-api-sdk:v1.3.0") }
+dependencies { implementation("com.github.hujuncheng-ddd.gold-api-cn:gold-api-sdk:1.3.0") }
 ```
 
 ## 快速开始
@@ -67,9 +67,12 @@ for (Quote q : quotes.values()) {
 ```bash
 export GOLD_API_KEY=gk_your_appkey   # https://www.gold-api.cn/client/register.php 免费注册获取
 
-mvn package -pl java                 # 构建
-java -cp java/target/classes:java/target/examples com.goldapi.examples.RealtimeExample   # 实时行情（11 字段）
-java -cp java/target/classes:java/target/examples com.goldapi.examples.VarietiesExample  # 品种列表（无需 key）
+cd java
+mvn package
+javac -encoding UTF-8 -cp target/classes -d target/examples examples/com/goldapi/examples/*.java
+
+java -Dfile.encoding=UTF-8 -cp target/classes:target/examples com.goldapi.examples.RealtimeExample    # 实时行情（11 字段）
+java -Dfile.encoding=UTF-8 -cp target/classes:target/examples com.goldapi.examples.VarietiesExample   # 品种列表（无需 key）
 ```
 
 ## 安全提示
