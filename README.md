@@ -13,7 +13,7 @@
 
 | 语言 | 安装 | 目录 | 依赖要求 |
 |---|---|---|---|
-| **PHP** | `composer require gold-api/sdk` | 根目录 | PHP ≥ 7.2，ext-curl |
+| **PHP** | `composer require gold-api/sdk-php` | 根目录 | PHP ≥ 7.2，ext-curl |
 | **Python** | `pip install gold-api` | [`python/`](python/) | Python ≥ 3.7，零依赖 |
 | **Node.js** | `npm install gold-api` | [`node/`](node/) | Node ≥ 18，零依赖（内置 fetch） |
 
@@ -35,7 +35,7 @@
 **2. 安装**（任选其一）
 
 ```bash
-composer require gold-api/sdk   # PHP
+composer require gold-api/sdk-php   # PHP
 pip install gold-api            # Python
 npm install gold-api            # Node.js
 ```
@@ -131,7 +131,7 @@ for (const q of Object.values(quotes)) {
 | 📝 接口文档 | https://www.gold-api.cn/docs.php |
 | 🪙 品种对照表 | https://www.gold-api.cn/varieties.php |
 | 🎫 免费注册 | https://www.gold-api.cn/client/register.php |
-| 📦 PHP SDK | [仓库根目录](src/GoldApiClient.php) · Packagist `gold-api/sdk` |
+| 📦 PHP SDK | [仓库根目录](src/GoldApiClient.php) · Packagist `gold-api/sdk-php` |
 | 🐍 Python SDK | [`python/`](python/) · PyPI `gold-api` |
 | 🟢 Node SDK | [`node/`](node/) · npm `gold-api` |
 | 💬 问题反馈 | [Issues](https://github.com/hujuncheng-ddd/gold-api-cn/issues) |
