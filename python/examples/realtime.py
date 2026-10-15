@@ -24,12 +24,18 @@ try:
     if not quotes:
         raise SystemExit("未查询到行情，请检查 goldId 是否正确")
 
-    print("%-14s %12s %10s %10s  %s" % ("品种", "最新价", "涨跌额", "涨跌幅", "更新时间"))
-    print("-" * 66)
+    # 每个品种返回的完整字段（11 个）：
+    #   lastPrice 最新价 / changePrice 涨跌额 / changeMargin 涨跌幅
+    #   yesyPrice 昨收 / openPrice 开盘 / highPrice 最高 / lowPrice 最低
+    #   buyPrice 买入价 / sellPrice 卖出价 / updateTime 更新时间
+    fmt = "%-12s %10s %9s %9s %10s %10s %10s %10s %10s %10s  %s"
+    print(fmt % ("品种", "最新价", "涨跌额", "涨跌幅", "昨收", "开盘", "最高", "最低", "买入价", "卖出价", "更新时间"))
+    print("-" * 122)
     for q in quotes.values():
-        print("%-14s %12.2f %10.2f %10s  %s" % (
-            q["varietyName"], q["lastPrice"], q["changePrice"],
-            q["changeMargin"], q["updateTime"]))
+        print(fmt % (
+            q["varietyName"], q["lastPrice"], q["changePrice"], q["changeMargin"],
+            q["yesyPrice"], q["openPrice"], q["highPrice"], q["lowPrice"],
+            q["buyPrice"], q["sellPrice"], q["updateTime"]))
 
     # 配额 / 限流信息（来自响应头，可用于客户端自行控制节奏）
     print("\n配额信息:", client.last_rate_limit())

@@ -24,11 +24,21 @@ try {
     process.exit(1);
   }
 
-  console.log('%-14s %12s %10s %10s  %s', '品种', '最新价', '涨跌额', '涨跌幅', '更新时间');
+  // 每个品种返回的完整字段（11 个）：
+  //   lastPrice 最新价 / changePrice 涨跌额 / changeMargin 涨跌幅
+  //   yesyPrice 昨收 / openPrice 开盘 / highPrice 最高 / lowPrice 最低
+  //   buyPrice 买入价 / sellPrice 卖出价 / updateTime 更新时间
+  const num = (v, w = 10) => (v == null ? '-'.padStart(w) : Number(v).toFixed(2).padStart(w));
+  const head = ['品种', '最新价', '涨跌额', '涨跌幅', '昨收', '开盘', '最高', '最低', '买入价', '卖出价', '更新时间'];
+  console.log(head[0].padEnd(12) + head.slice(1, -1).map(h => h.padStart(10)).join(' ') + '  ' + head[10]);
+  console.log('-'.repeat(122));
   for (const q of Object.values(quotes)) {
     console.log(
-      `${q.varietyName.padEnd(14)} ${q.lastPrice.toFixed(2).padStart(12)} ` +
-      `${q.changePrice.toFixed(2).padStart(10)} ${q.changeMargin.padStart(10)}  ${q.updateTime}`
+      q.varietyName.padEnd(12) +
+      [num(q.lastPrice), num(q.changePrice, 9), String(q.changeMargin).padStart(9),
+       num(q.yesyPrice), num(q.openPrice), num(q.highPrice), num(q.lowPrice),
+       num(q.buyPrice), num(q.sellPrice)].join(' ') +
+      '  ' + q.updateTime
     );
   }
 

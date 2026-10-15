@@ -99,6 +99,36 @@ for (const q of Object.values(quotes)) {
 | 配额/限流感知 | `getLastRateLimit()` | `last_rate_limit()` | `getLastRateLimit()` |
 | 异常（msgId/requestId/httpCode + 限流判断） | `GoldApiException` | `GoldApiException` | `GoldApiException` |
 
+## 📊 返回字段（每个品种 11 个字段）
+
+```json
+{
+  "goldId": "hf_GC",
+  "variety": "COMEX黄金",
+  "varietyName": "纽约金",
+  "lastPrice": 4159.012,
+  "buyPrice": 4156.8,
+  "sellPrice": 4157.0,
+  "highPrice": 4183.3,
+  "lowPrice": 4120.9,
+  "openPrice": 4128.3,
+  "yesyPrice": 4107.9,
+  "changePrice": 51.112,
+  "changeMargin": "1.24%",
+  "updateTime": "2026-10-15 14:35:22"
+}
+```
+
+| 字段 | 说明 |
+|---|---|
+| `lastPrice` | 最新价 |
+| `changePrice` / `changeMargin` | 涨跌额 / 涨跌幅（`-3.33%`） |
+| `yesyPrice` | 昨收价（涨跌基准价） |
+| `openPrice` | 开盘价（现货类品种可能为 `0`） |
+| `highPrice` / `lowPrice` | 当日最高 / 最低 |
+| `buyPrice` / `sellPrice` | 买入价 / 卖出价 |
+| `updateTime` | 行情更新时间（北京时间） |
+
 ## 🪙 常用 goldId 速查
 
 | goldId | 品种 | 市场 |

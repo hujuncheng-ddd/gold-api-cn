@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+gold_api/__init__.py
+gold_api/client.py
+gold_api/exceptions.py
+gold_api.egg-info/PKG-INFO
+gold_api.egg-info/SOURCES.txt
+gold_api.egg-info/dependency_links.txt
+gold_api.egg-info/top_level.txt

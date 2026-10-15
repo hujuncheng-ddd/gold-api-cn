@@ -28,15 +28,26 @@ try {
         exit("未查询到行情，请检查 goldId 是否正确\n");
     }
 
-    printf("%-14s %12s %10s %10s  %s\n", '品种', '最新价', '涨跌额', '涨跌幅', '更新时间');
-    echo str_repeat('-', 66), "\n";
+    // 每个品种返回的完整字段（11 个）：
+    //   lastPrice 最新价 / changePrice 涨跌额 / changeMargin 涨跌幅
+    //   yesyPrice 昨收 / openPrice 开盘 / highPrice 最高 / lowPrice 最低
+    //   buyPrice 买入价 / sellPrice 卖出价 / updateTime 更新时间
+    $fmt  = "%-12s %10s %9s %9s %10s %10s %10s %10s %10s %10s  %s\n";
+    printf($fmt, '品种', '最新价', '涨跌额', '涨跌幅', '昨收', '开盘', '最高', '最低', '买入价', '卖出价', '更新时间');
+    echo str_repeat('-', 122), "\n";
     foreach ($quotes as $q) {
         printf(
-            "%-14s %12.2f %10.2f %10s  %s\n",
+            $fmt,
             $q['varietyName'],
             $q['lastPrice'],
             $q['changePrice'],
             $q['changeMargin'],
+            $q['yesyPrice'],
+            $q['openPrice'],
+            $q['highPrice'],
+            $q['lowPrice'],
+            $q['buyPrice'],
+            $q['sellPrice'],
             $q['updateTime']
         );
     }
